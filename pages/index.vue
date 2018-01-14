@@ -1,58 +1,41 @@
 <template>
   <section class="container">
-    <div>
-      <logo/>
-      <h1 class="title">
-        player-app
-      </h1>
-      <h2 class="subtitle">
-        A data collection application for the player data/state required for the project
-      </h2>
-      <div class="links">
-        <a href="https://nuxtjs.org/" target="_blank" class="button--green">Documentation</a>
-        <a href="https://github.com/nuxt/nuxt.js" target="_blank" class="button--grey">GitHub</a>
-      </div>
-    </div>
+    <canvas ref="canvas"></canvas>
   </section>
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
+import Game from '@varbrad/hoai-game'
 
 export default {
-  components: {
-    Logo
+  data() {
+    return {
+      game: null
+    }
+  },
+  mounted() {
+    this.game = new Game(this.$refs.canvas, 640, 480)
   }
 }
 </script>
 
-<style>
+<style lang="scss">
+$dark: #314256;
+$primary: #f1e202;
+
 .container {
-  min-height: 100vh;
+  width: 100vw;
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
-}
+  background-color: $dark;
 
-.title {
-  font-family: "Quicksand", "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; /* 1 */
-  display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
-}
-
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
-}
-
-.links {
-  padding-top: 15px;
+  > canvas {
+    border: 4px solid $primary;
+    box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.2);
+    background: white;
+  }
 }
 </style>
