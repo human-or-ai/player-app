@@ -1,28 +1,49 @@
 <template>
   <section class="container">
     <div class="canvas">
-      <canvas ref="canvas"></canvas>
+      <canvas ref="canvas" width="800" height="600" @click="play()"></canvas>
     </div>
     <div class="controls">
-      <button>Reset</button>
+      <div class="debug" v-if="game">
+        <p>Game State: {{ game.paused ? 'PAUSED' : 'PLAY' }}</p>
+      </div>
+      <button @click="game.reset()">Reset</button>
       <nuxt-link to="/">Back</nuxt-link>
     </div>
   </section>
 </template>
 
 <script>
-import Game from '@varbrad/hoai-game'
+import Game from '@varbrad/hoai-game';
 
 export default {
   data() {
     return {
       game: null
-    }
+    };
   },
   mounted() {
-    this.game = new Game(this.$refs.canvas, 640, 480)
+    this.game = new Game(this.$refs.canvas, 800, 600);
+    window.addEventListener('keydown', this.keydown);
+    window.addEventListener('keyup', this.keyup);
+  },
+  beforeDestroy() {
+    window.removeEventListener('keydown', this.keydown);
+  },
+  methods: {
+    play() {
+      this.game.start();
+    },
+    keydown(e) {
+      if (e.repeat) return;
+      console.log(e);
+    },
+    keyup(e) {
+      if (e.repeat) return;
+      console.log(e);
+    }
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
